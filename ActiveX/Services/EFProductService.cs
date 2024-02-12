@@ -8,9 +8,9 @@ public class EFProductService : IProductService
 {
     private PGDbContext context;
 
-    public EFProductService(PGDbContext context)
+    public EFProductService(PGDbContext ctx)
     {
-        context = context;
+        context = ctx;
     }
 
     public IQueryable<Product> Products => context.Products;
