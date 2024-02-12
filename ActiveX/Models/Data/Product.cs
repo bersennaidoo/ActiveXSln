@@ -8,6 +8,8 @@ public class Product
 
     public string Name { get; set; } = String.Empty;
 
+    public string Description { get; set; } = String.Empty;
+
     [Column(TypeName = "decimal(8, 2)")]
     public decimal Price { get; set; }
 

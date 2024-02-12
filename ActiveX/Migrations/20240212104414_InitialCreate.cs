@@ -18,6 +18,7 @@ namespace ActiveX.Migrations
                     ProductID = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
                     Price = table.Column<decimal>(type: "numeric(8,2)", nullable: false),
                     Category = table.Column<string>(type: "text", nullable: false)
                 },
