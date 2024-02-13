@@ -16,10 +16,11 @@ public class HomeController : Controller
         pService = service;
     }
 
-    public ViewResult Index(int productPage = 1)
+    public ViewResult Index(string? category, int productPage = 1)
         => View(new ProductsListViewModel
         {
             Products = pService.Products
+                    .Where(p => category == null || p.Category == category)
                     .OrderBy(p => p.ProductID)
                     .Skip((productPage - 1) * PageSize)
                     .Take(PageSize),
@@ -27,8 +28,12 @@ public class HomeController : Controller
             {
                 CurrentPage = productPage,
                 ItemsPerPage = PageSize,
-                TotalItems = pService.Products.Count()
-            }
+                TotalItems = category == null
+                ? pService.Products.Count()
+                : pService.Products.Where(e =>
+                        e.Category == category).Count()
+            },
+            CurrentCategory = category
         });
 }
 
