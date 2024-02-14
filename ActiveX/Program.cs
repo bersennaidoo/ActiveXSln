@@ -15,6 +15,9 @@ builder.Services.AddDbContext<PGDbContext>(options => {
 
 builder.Services.AddScoped<IProductService, EFProductService>();
 
+builder.Services.AddRazorPages();
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
 
 builder.Services.AddControllersWithViews();
 
@@ -23,6 +26,8 @@ var app = builder.Build();
 //app.MapGet("/", () => "Hello World!");
 
 app.UseStaticFiles();
+app.UseSession();
+
 app.MapControllerRoute("catpage",
         "{category}/Page{productPage:int}",
         new 
@@ -66,6 +71,8 @@ app.MapControllerRoute("pagination",
 
 
 app.MapDefaultControllerRoute();
+
+app.MapRazorPages();
 
 SeedData.EnsurePopulated(app);
 
