@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using ActiveX.Infrastructure;
+using Microsoft.AspNetCore.Http;
 
 namespace ActiveX.Models.Data;
 
@@ -10,9 +11,12 @@ public class SessionCart : Cart
         ISession? session =
             services.GetRequiredService<IHttpContextAccessor>()
             .HttpContext?.Session;
-        SessionCart cart = session?.Get<SessionCart>("Cart")
+
+        SessionCart cart = session?.GetJson<SessionCart>("Cart")
             ?? new SessionCart();
+
         cart.Session = session;
+
         return cart;
     }
 
@@ -22,13 +26,13 @@ public class SessionCart : Cart
     public override void AddItem(Product product, int quantity)
     {
         base.AddItem(product, quantity);
-        Session?.Set<SessionCart>("Cart", this);
+        Session?.SetJson("Cart", this);
     }
 
     public override void RemoveLine(Product product)
     {
         base.RemoveLine(product);
-        Session?.Set<SessionCart>("Cart", this);
+        Session?.SetJson("Cart", this);
     }
 
     public override void Clear()
